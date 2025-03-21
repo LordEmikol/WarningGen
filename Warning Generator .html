@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Steam ID Warning Generator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 1em;
+    }
+    .output {
+      margin-top: 20px;
+      font-weight: bold;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <h2>Steam ID Warning Generator</h2>
+
+  <label for="steamid">Enter Steam ID:</label>
+  <input type="text" id="steamid" placeholder="7656119XXXXXXXXXX">
+
+  <label for="warning">Select a Warning:</label>
+  <select id="warning">
+    <option value="">-- Select a warning --</option>
+    <option value="This is a limited KOS server. rules at cali.gg/rules.">KOS warning</option>
+    <option value="Raiding is not allowed in the first 24 hours rules at cali.gg/rules">Raiding in the first 24 hours</option>
+    <option value="You may not counter a raid within 300m of your base. Cali.gg/rules">Counter raid under 300m</option>
+    <option value="Please do not attack players inside a pvp zone while you're outside of it.">Attacking players that are in a pvp zone while they are outside of it</option>
+    <option value="Violation - You must remove all locks from a base you raid when done. Cali.gg/rules">Locks left on after raid</option>
+    <option value="Violation - Weightclass. Rules at cali.gg">Weightclass violation</option>
+    <option value="Stay off my lawn rule. Rules at Cali.gg">Stay off my lawn rule</option>
+    <option value="You cannot take over bases. Server rules @ Cali.gg">Taking over a base</option>
+    <option value="Stay off my lawn rule. Rules at Cali.gg">Weightclass violation</option>
+    <!-- Add more options as needed -->
+  </select>
+
+  <button onclick="generateCommand()">Generate Command</button>
+  
+  <div id="credit">
+  Made by Emikol for <a href="https://Cali.gg" target="_blank">Cali.gg Server</a>
+  </div>
+
+  <div class="output" id="commandOutput"></div>
+
+  <button id="copyButton" style="display:none" onclick="copyCommand()">Copy to Clipboard</button>
+
+
+  <script>
+    function generateCommand() {
+      const steamid = document.getElementById("steamid").value.trim();
+      const warning = document.getElementById("warning").value;
+      const output = document.getElementById("commandOutput");
+      const copyBtn = document.getElementById("copyButton");
+
+      if (!steamid || !warning) {
+        output.textContent = "Please enter a Steam ID and select a warning.";
+        copyBtn.style.display = "none";
+        return;
+      }
+
+      const command = `/warn ${steamid} "${warning}"`;
+      output.textContent = command;
+      copyBtn.style.display = "block";
+    }
+
+    function copyCommand() {
+      const command = document.getElementById("commandOutput").textContent;
+      navigator.clipboard.writeText(command)
+        .then(() => alert("Command copied to clipboard! Paste it into your in game chat field to issue the warning."))
+        .catch(() => alert("Failed to copy."));
+    }
+  </script>
+</body>
+</html>
